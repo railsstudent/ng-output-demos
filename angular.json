@@ -3,5 +3,193 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
+    "output-function": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/output-function",
+      "sourceRoot": "projects/output-function/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "dist/output-function",
+            "index": "projects/output-function/src/index.html",
+            "browser": "projects/output-function/src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "projects/output-function/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/output-function/src/favicon.ico",
+              "projects/output-function/src/assets"
+            ],
+            "styles": [
+              "projects/output-function/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "output-function:build:production"
+            },
+            "development": {
+              "buildTarget": "output-function:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "buildTarget": "output-function:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "projects/output-function/tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/output-function/src/favicon.ico",
+              "projects/output-function/src/assets"
+            ],
+            "styles": [
+              "projects/output-function/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    },
+    "outputFromObservable-rxjs-interop": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/output-from-observable-rxjs-interop",
+      "sourceRoot": "projects/output-from-observable-rxjs-interop/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "dist/output-from-observable-rxjs-interop",
+            "index": "projects/output-from-observable-rxjs-interop/src/index.html",
+            "browser": "projects/output-from-observable-rxjs-interop/src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "projects/output-from-observable-rxjs-interop/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/output-from-observable-rxjs-interop/src/favicon.ico",
+              "projects/output-from-observable-rxjs-interop/src/assets"
+            ],
+            "styles": [
+              "projects/output-from-observable-rxjs-interop/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "outputFromObservable-rxjs-interop:build:production"
+            },
+            "development": {
+              "buildTarget": "outputFromObservable-rxjs-interop:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "buildTarget": "outputFromObservable-rxjs-interop:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "projects/output-from-observable-rxjs-interop/tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/output-from-observable-rxjs-interop/src/favicon.ico",
+              "projects/output-from-observable-rxjs-interop/src/assets"
+            ],
+            "styles": [
+              "projects/output-from-observable-rxjs-interop/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    }
   }
 }
