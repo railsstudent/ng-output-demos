@@ -10,9 +10,7 @@ import { outputToObservable } from '@angular/core/rxjs-interop';
   imports: [ImagePlaceholderComponent, AsyncPipe],
   template: `
     <header>Angular {{ version }} - {{ title }}</header>
-    <app-image-placeholder
-      (placeholderUrl)="url = $event"
-    />
+    <app-image-placeholder (url)="url = $event" />
     <p>URL: {{ url }}</p>
     <p>URL Change {{ urlChangeCount$ | async }} times.</p>
     <img [src]="url" alt="generic placeholder" />
@@ -35,13 +33,13 @@ import { outputToObservable } from '@angular/core/rxjs-interop';
 })
 export class AppComponent implements OnInit {
   version = VERSION.full;
-  title = 'outputFromObservable rxJS-interop in 17.3.0';
+  title = 'Output function in 17.3.0';
   url = '';
   child = viewChild.required(ImagePlaceholderComponent);
   urlChangeCount$!: Observable<number>;
 
   ngOnInit(): void {
-    this.urlChangeCount$ = outputToObservable(this.child().placeholderUrl)
+    this.urlChangeCount$ = outputToObservable(this.child()    .placeholderUrl)
       .pipe(scan((acc) => acc + 1, 0));
   }
 }

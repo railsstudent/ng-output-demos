@@ -1,7 +1,5 @@
-import { ChangeDetectionStrategy, Component, Output, signal } from '@angular/core';
-import { toObservable, outputFromObservable } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, computed, effect, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { map, combineLatestWith, debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-image-placeholder',
@@ -66,26 +64,26 @@ import { map, combineLatestWith, debounceTime } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ImagePlaceholderComponent {
-  text = signal('Signal Output');
-  width = signal(400);
-  height = signal(120);
+  text = signal('Output function');
+  width = signal(300);
+  height = signal(100);
   color = signal('#fff');
   backgroundColor = signal('#000');
 
-  placeholderUrl = outputFromObservable(toObservable(this.text)
-    .pipe(
-      combineLatestWith(toObservable(this.width),
-        toObservable(this.height),
-        toObservable(this.color),
-        toObservable(this.backgroundColor)
-      ),
-      map(([text, width, height, textColor, bgColor]) => {
-        const encodedText = text ? encodeURIComponent(text) : `${width} x ${height}`;
-        const color = encodeURIComponent(textColor);
-        const backgroundColor = encodeURIComponent(bgColor);
+  url = computed(() => {
+    const text = this.text() ? encodeURIComponent(this.text()) : `${this.width()} x ${this.height()}`;
 
-        return `https://via.assets.so/img.jpg?w=${width}&h=${height}&&tc=${color}&bg=${backgroundColor}&t=${encodedText}`;
-      }),
-      debounceTime(200)
-    ));
+    const color = encodeURIComponent(this.color());
+    const backgroundColor = encodeURIComponent(this.backgroundColor());
+
+    return `https://via.assets.so/img.jpg?w=${this.width()}&h=${this.height()}&&tc=${color}&bg=${backgroundColor}&t=${text}`;
+  });
+
+  placeholderUrl = output<string>({
+    alias: 'url'
+  });
+
+  constructor() {
+    effect(() => this.placeholderUrl.emit(this.url()))
+  }
 }

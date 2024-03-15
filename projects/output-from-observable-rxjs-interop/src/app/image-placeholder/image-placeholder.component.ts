@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, Output, signal } from '@angular/core';
-import { toObservable, outputFromObservable } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { outputFromObservable, toObservable } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
-import { map, combineLatestWith, debounceTime } from 'rxjs';
+import { combineLatestWith, debounceTime, map } from 'rxjs';
 
 @Component({
   selector: 'app-image-placeholder',
@@ -67,7 +67,7 @@ import { map, combineLatestWith, debounceTime } from 'rxjs';
 })
 export class ImagePlaceholderComponent {
   text = signal('Signal Output');
-  width = signal(400);
+  width = signal(300);
   height = signal(120);
   color = signal('#fff');
   backgroundColor = signal('#000');

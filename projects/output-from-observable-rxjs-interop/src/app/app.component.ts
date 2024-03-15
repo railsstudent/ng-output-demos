@@ -10,9 +10,7 @@ import { outputToObservable } from '@angular/core/rxjs-interop';
   imports: [ImagePlaceholderComponent, AsyncPipe],
   template: `
     <header>Angular {{ version }} - {{ title }}</header>
-    <app-image-placeholder
-      (placeholderUrl)="url = $event"
-    />
+    <app-image-placeholder (placeholderUrl)="url = $event" />
     <p>URL: {{ url }}</p>
     <p>URL Change {{ urlChangeCount$ | async }} times.</p>
     <img [src]="url" alt="generic placeholder" />
