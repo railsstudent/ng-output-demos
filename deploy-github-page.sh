@@ -8,9 +8,8 @@ fi
 echo "delete docs/$1"
 rm -rf docs/$1
 echo "build project $1 starts"
-# ng build --output-path docs/
 ng build --project=$1 --output-path docs/$1
-# cp ./docs/browser/index.html  ./docs/browser/404.html
-# cp ./docs/browser/*  ./docs
-# rm -rf ./docs/browser
+cp ./docs/$1/browser/index.html  ./docs/$1/browser/404.html
+cp ./docs/$1/browser/*  ./docs/$1
+rm -rf ./docs/$1/browser
 echo 'build project finishes'
