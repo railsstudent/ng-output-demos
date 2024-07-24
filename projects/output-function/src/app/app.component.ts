@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit, VERSION, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal, VERSION, viewChild } from '@angular/core';
 import { ImagePlaceholderComponent } from './image-placeholder/image-placeholder.component';
 import { Observable, scan } from 'rxjs';
 import { outputToObservable } from '@angular/core/rxjs-interop';
@@ -37,6 +37,9 @@ export class AppComponent implements OnInit {
   url = '';
   child = viewChild.required(ImagePlaceholderComponent);
   urlChangeCount$!: Observable<number>;
+
+  urlChangeCount = signal(0);
+  url2 = signal('');
 
   ngOnInit(): void {
     this.urlChangeCount$ = outputToObservable(this.child()    .placeholderUrl)
