@@ -1,19 +1,16 @@
-import { AsyncPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit, VERSION, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, VERSION } from '@angular/core';
 import { ImagePlaceholderComponent } from './image-placeholder/image-placeholder.component';
-import { Observable, scan } from 'rxjs';
-import { outputToObservable } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [ImagePlaceholderComponent, AsyncPipe],
+  imports: [ImagePlaceholderComponent],
   template: `
     <header>Angular {{ version }} - {{ title }}</header>
-    <app-image-placeholder (placeholderUrl)="url = $event" />
-    <p>URL: {{ url }}</p>
-    <p>URL Change {{ urlChangeCount$ | async }} times.</p>
-    <img [src]="url" alt="generic placeholder" />
+    <app-image-placeholder (placeholderUrl)="changeUrl($event)" />
+    <p>URL: {{ url() }}</p>
+    <p>URL Change {{ urlChangeCount() }} times.</p>
+    <img [src]="url()" alt="generic placeholder" />
   `,
   styles: `
     :host {
@@ -31,15 +28,14 @@ import { outputToObservable } from '@angular/core/rxjs-interop';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   version = VERSION.full;
   title = 'outputFromObservable rxJS-interop in 17.3.0';
-  url = '';
-  child = viewChild.required(ImagePlaceholderComponent);
-  urlChangeCount$!: Observable<number>;
+  url = signal('');
+  urlChangeCount = signal(0);
 
-  ngOnInit(): void {
-    this.urlChangeCount$ = outputToObservable(this.child().placeholderUrl)
-      .pipe(scan((acc) => acc + 1, 0));
+  changeUrl(newUrl: string) {
+    this.url.set(newUrl);
+    this.urlChangeCount.update((prev) => prev + 1);
   }
 }

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { outputFromObservable, toObservable } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
-import { combineLatestWith, debounceTime, map } from 'rxjs';
+import { combineLatestWith, debounceTime, distinctUntilChanged, map } from 'rxjs';
 
 @Component({
   selector: 'app-image-placeholder',
@@ -86,6 +86,7 @@ export class ImagePlaceholderComponent {
 
         return `https://via.assets.so/img.jpg?w=${width}&h=${height}&&tc=${color}&bg=${backgroundColor}&t=${encodedText}`;
       }),
-      debounceTime(200)
+      debounceTime(200),
+      distinctUntilChanged(),
     ));
 }

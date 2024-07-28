@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, signal, VERSION, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, VERSION } from '@angular/core';
 import { ImagePlaceholderComponent } from './image-placeholder/image-placeholder.component';
 
 @Component({
@@ -7,7 +7,7 @@ import { ImagePlaceholderComponent } from './image-placeholder/image-placeholder
   imports: [ImagePlaceholderComponent],
   template: `
     <header>Angular {{ version }} - {{ title }}</header>
-    <app-image-placeholder />
+    <app-image-placeholder (url)="changeUrl($event)" />
     <p>URL: {{ url() }}</p>
     <p>URL Change {{ urlChangeCount() }} times.</p>
     <img [src]="url()" alt="generic placeholder" />
@@ -31,18 +31,11 @@ import { ImagePlaceholderComponent } from './image-placeholder/image-placeholder
 export class AppComponent {
   version = VERSION.full;
   title = 'Output function in 17.3.0';
-  child = viewChild.required(ImagePlaceholderComponent);
   urlChangeCount = signal(0);
   url = signal('');
 
-  constructor() {
-    effect((onCleanUp) => {
-      const sub = this.child().placeholderUrl.subscribe((ouputtedUrl) => {
-        this.url.set(ouputtedUrl);
-        this.urlChangeCount.update((prev) => prev + 1);
-      });
-
-      onCleanUp(() => sub.unsubscribe());
-    })
+  changeUrl(newUrl: string) {
+    this.url.set(newUrl);
+    this.urlChangeCount.update((prev) => prev + 1);
   }
 }
